@@ -1,13 +1,13 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
-export const getUrls: FastifyPluginAsyncZod = async server => {
+export const getLinks: FastifyPluginAsyncZod = async server => {
   server.get(
-    '/urls',
+    '/links',
     {
       schema: {
-        summary: 'Get URL list',
-        tags: ['URL'],
+        summary: 'Get link list',
+        tags: ['Links'],
         response: {
           200: z.string(),
         },
