@@ -1,53 +1,53 @@
-import fastifyCors from "@fastify/cors";
-import fastifySwagger from "@fastify/swagger";
-import fastifySwaggerUi from "@fastify/swagger-ui";
-import fastify from "fastify";
+import fastifyCors from '@fastify/cors'
+import fastifySwagger from '@fastify/swagger'
+import fastifySwaggerUi from '@fastify/swagger-ui'
+import fastify from 'fastify'
 import {
   hasZodFastifySchemaValidationErrors,
   jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
-} from "fastify-type-provider-zod";
-import { getUrls } from "./routes/get-urls";
-import { env } from "@/env";
+} from 'fastify-type-provider-zod'
+import { getUrls } from './routes/get-urls'
+import { env } from '@/env'
 
-const HOST = "0.0.0.0";
-const PORT = env.PORT;
+const HOST = '0.0.0.0'
+const PORT = env.PORT
 
-const server = fastify();
+const server = fastify()
 
-server.setValidatorCompiler(validatorCompiler);
-server.setSerializerCompiler(serializerCompiler);
+server.setValidatorCompiler(validatorCompiler)
+server.setSerializerCompiler(serializerCompiler)
 
 server.setErrorHandler((error, _, reply) => {
   if (hasZodFastifySchemaValidationErrors(error)) {
     return reply.status(400).send({
-      message: "Validation error",
+      message: 'Validation error',
       reason: error.validation,
-    });
+    })
   }
 
-  return reply.status(500).send({ message: "Internal server error" });
-});
+  return reply.status(500).send({ message: 'Internal server error' })
+})
 
-server.register(fastifyCors, { origin: "*" });
+server.register(fastifyCors, { origin: '*' })
 
 server.register(fastifySwagger, {
   openapi: {
     info: {
-      title: "Brevly API",
-      version: "1.0.0",
+      title: 'Brevly API',
+      version: '1.0.0',
     },
   },
   transform: jsonSchemaTransform,
-});
+})
 
 server.register(fastifySwaggerUi, {
-  routePrefix: "/docs",
-});
+  routePrefix: '/docs',
+})
 
-server.register(getUrls);
+server.register(getUrls)
 
 server.listen({ port: PORT, host: HOST }).then(() => {
-  console.log(`🌎✅ Server running at http://${HOST}:${PORT}`);
-});
+  console.log(`🌎✅ Server running at http://${HOST}:${PORT}`)
+})
