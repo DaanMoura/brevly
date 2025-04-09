@@ -8,8 +8,9 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { getLinks } from './routes/get-links'
+import { getLinksRoute } from './routes/get-links'
 import { env } from '@/env'
+import { createLinkRoute } from './routes/create-link'
 
 const HOST = '0.0.0.0'
 const PORT = env.PORT
@@ -46,7 +47,8 @@ server.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 })
 
-server.register(getLinks)
+server.register(getLinksRoute)
+server.register(createLinkRoute)
 
 server.listen({ port: PORT, host: HOST }).then(() => {
   console.log(`🌎✅ Server running at http://${HOST}:${PORT}`)
