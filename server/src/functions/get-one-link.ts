@@ -2,14 +2,12 @@ import { db } from '@/db'
 import { schema } from '@/db/schemas'
 import { makeRight, type Either } from '@/shared/either'
 import type { LinkModel } from '@/shared/schemas/link-model'
+import { eq } from 'drizzle-orm'
 
-type GetLinksOutput = {
-  links: LinkModel[]
-  total: number
-}
-
-export const getLinks = async (): Promise<Either<never, GetLinksOutput>> => {
-  const links: GetLinksOutput['links'] = await db
+export const getOneLink = async (
+  alias: string
+): Promise<Either<never, LinkModel>> => {
+  const linkResult = await db
     .select({
       id: schema.links.id,
       originalUrl: schema.links.originalUrl,
@@ -18,8 +16,9 @@ export const getLinks = async (): Promise<Either<never, GetLinksOutput>> => {
       createdAt: schema.links.createdAt,
     })
     .from(schema.links)
+    .where(eq(schema.links.alias, alias))
 
-  const total = links.length
+  const link: LinkModel = linkResult[0]
 
-  return makeRight({ links, total })
+  return makeRight(link)
 }
