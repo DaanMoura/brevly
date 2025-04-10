@@ -1,21 +1,21 @@
-import { getOneLink } from '@/functions/get-one-link'
+import { deleteLink } from '@/functions/delete-link'
 import { isLeft } from '@/shared/either'
 import { linkSchema } from '@/shared/schemas/link-model'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
-export const getOneLinkRoute: FastifyPluginAsyncZod = async server => {
-  server.get(
-    '/links/:alias',
+export const deleteLinkRoute: FastifyPluginAsyncZod = async server => {
+  server.delete(
+    '/link/:alias',
     {
       schema: {
-        summary: 'Get one link',
+        summary: 'Delete link',
         tags: ['Links'],
         params: z.object({
           alias: linkSchema.alias,
         }),
         response: {
-          200: z.object(linkSchema),
+          201: z.object({ message: z.string() }),
           404: z.object({ message: z.string() }),
         },
       },
@@ -23,13 +23,13 @@ export const getOneLinkRoute: FastifyPluginAsyncZod = async server => {
     async (request, reply) => {
       const { alias } = request.params
 
-      const link = await getOneLink(alias)
+      const result = await deleteLink(alias)
 
-      if (isLeft(link)) {
-        return reply.status(404).send({ message: 'Link not found' })
+      if (isLeft(result)) {
+        return reply.status(404).send({ message: result.left })
       }
 
-      return reply.status(200).send(link.right)
+      return reply.status(201).send({ message: 'Link deleted successfully' })
     }
   )
 }

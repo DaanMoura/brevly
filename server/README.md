@@ -14,3 +14,11 @@
     - [ ]  Deve ser gerado um nome aleatório e único para o arquivo
     - [ ]  Deve ser possível realizar a listagem de forma performática
     - [ ]  O CSV deve ter campos como, URL original, URL encurtada, contagem de acessos e data de criação.
+
+## Testes
+- [x] create link
+- [ ] get links (TODO: inconsistente) 
+- [ ] get one link
+- [ ] delete link
+- [ ] increment access count
+- [ ] generate csv

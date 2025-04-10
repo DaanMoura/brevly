@@ -9,6 +9,11 @@ type GetLinksOutput = {
 }
 
 export const getLinks = async (): Promise<Either<never, GetLinksOutput>> => {
+  // Log the current database state before retrieving links
+  const allLinks = await db.select().from(schema.links)
+  console.log('DEBUG: All links in database:', allLinks)
+  console.log('DEBUG: Total links count:', allLinks.length)
+
   const links: GetLinksOutput['links'] = await db
     .select({
       id: schema.links.id,
@@ -18,6 +23,9 @@ export const getLinks = async (): Promise<Either<never, GetLinksOutput>> => {
       createdAt: schema.links.createdAt,
     })
     .from(schema.links)
+
+  console.log('DEBUG: Retrieved links:', links)
+  console.log('DEBUG: Retrieved links count:', links.length)
 
   const total = links.length
 
