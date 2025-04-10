@@ -10,7 +10,12 @@ import { getOneLink } from './get-one-link'
 export const createLink = async (
   input: CreateLinkInput
 ): Promise<Either<string, { linkId: string }>> => {
-  const { originalUrl, alias } = createLinkInputSchema.parse(input)
+  const parsed = createLinkInputSchema.safeParse(input)
+  if (!parsed.success) {
+    return makeLeft(parsed.error.message)
+  }
+
+  const { originalUrl, alias } = parsed.data
 
   const linkCheck = await getOneLink(alias)
 
