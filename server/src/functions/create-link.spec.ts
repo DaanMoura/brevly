@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { createLink } from './create-link'
 import { isRight } from '@/shared/either'
 import { db } from '@/db'
@@ -6,6 +6,10 @@ import { schema } from '@/db/schemas'
 
 describe('create link', () => {
   beforeAll(async () => {
+    await db.delete(schema.links)
+  })
+
+  afterAll(async () => {
     await db.delete(schema.links)
   })
 
