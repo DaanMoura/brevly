@@ -1,3 +1,6 @@
-export { createLinkRoute } from "./create-link";
-export { getLinksRoute } from "./get-links";
-export { getOneLinkRoute } from "./get-one-link";
+export { createLinkRoute } from './create-link'
+export { getLinksRoute } from './get-links'
+export { getOneLinkRoute } from './get-one-link'
+export { deleteLinkRoute } from './delete-link'
+export { increaseLinkRoute } from './increase-link'
+export { exportLinksRoute } from './export-links'

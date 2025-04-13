@@ -9,8 +9,14 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 import { env } from '@/env'
-import { createLinkRoute, getLinksRoute, getOneLinkRoute } from './routes'
-import { deleteLinkRoute } from './routes/delete-link'
+import {
+  createLinkRoute,
+  getLinksRoute,
+  getOneLinkRoute,
+  increaseLinkRoute,
+  deleteLinkRoute,
+  exportLinksRoute,
+} from './routes'
 
 const HOST = '0.0.0.0'
 const PORT = env.PORT
@@ -50,7 +56,9 @@ server.register(fastifySwaggerUi, {
 server.register(getLinksRoute)
 server.register(createLinkRoute)
 server.register(getOneLinkRoute)
+server.register(increaseLinkRoute)
 server.register(deleteLinkRoute)
+server.register(exportLinksRoute)
 
 server.listen({ port: PORT, host: HOST }).then(() => {
   console.log(`🌎✅ Server running at http://${HOST}:${PORT}`)

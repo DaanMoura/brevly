@@ -4,11 +4,11 @@
     - [x]  Não deve ser possível criar um link com URL encurtada mal formatada
     - [x]  Não deve ser possível criar um link com URL encurtada já existente
       - [x] Validar erro de forma melhor
-- [ ]  Deve ser possível deletar um link
+- [x]  Deve ser possível deletar um link
 - [x]  Deve ser possível obter a URL original por meio de uma URL encurtada
   - [ ] Checar se alias é suficiente ou precisa ser necessariamente a URL em si
 - [x]  Deve ser possível listar todas as URL’s cadastradas
-- [ ]  Deve ser possível incrementar a quantidade de acessos de um link
+- [x]  Deve ser possível incrementar a quantidade de acessos de um link
 - [ ]  Deve ser possível exportar os links criados em um CSV
     - [ ]  Deve ser possível acessar o CSV por meio de uma CDN (Amazon S3, Cloudflare R2, etc)
     - [ ]  Deve ser gerado um nome aleatório e único para o arquivo
@@ -18,7 +18,7 @@
 ## Testes
 - [x] create link
 - [ ] get links (TODO: inconsistente) 
-- [ ] get one link
-- [ ] delete link
-- [ ] increment access count
+- [x] get one link
+- [x] delete link
+- [x] increment access count
 - [ ] generate csv
