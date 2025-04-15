@@ -13,6 +13,13 @@
     "moduleDetection": "force",
     "noEmit": true,
 
+    "baseUrl": "./src",
+    "paths": {
+      "@/components/*": ["./components/*"],
+      "@/*": ["./*"],
+      "$/*": ["../styled-system/*"] // if change here, also change in panda.config https://panda-css.com/docs/overview/faq#hmr-does-not-work-when-i-use-tsconfig-paths
+    },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

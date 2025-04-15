@@ -1,4 +1,5 @@
 import { defineConfig } from '@pandacss/dev'
+import { colors, textStyles } from './src/design-system/tokens'
 
 export default defineConfig({
   // Whether to use css reset
@@ -14,7 +15,12 @@ export default defineConfig({
 
   // Useful for theme customization
   theme: {
-    extend: {}
+    tokens: {
+      colors
+    },
+    extend: {
+      textStyles
+    }
   },
 
   // Enable jsx framework
