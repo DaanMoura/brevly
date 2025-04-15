@@ -27,5 +27,14 @@ export default defineConfig({
   jsxFramework: 'react',
 
   // The output directory for your css system
-  outdir: 'styled-system'
+  outdir: 'styled-system',
+
+  globalCss: {
+    html: {
+      '--global-font-body': '"Open Sans", sans-serif'
+    },
+    body: {
+      backgroundColor: 'gray200'
+    }
+  }
 })
