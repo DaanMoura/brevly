@@ -6,7 +6,12 @@ const h1 = styled('h1')
 const h2 = styled('h2')
 const h3 = styled('h3')
 const h4 = styled('h4')
-const a = styled('a')
+const a = styled('a', {
+  base: {
+    color: 'blueBase',
+    textDecoration: 'underline'
+  }
+})
 
 const Text = {
   p,

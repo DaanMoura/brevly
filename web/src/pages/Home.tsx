@@ -4,7 +4,7 @@ import LinkList from '@/features/LinkList'
 
 import Logo from '@/design-system/assets/Logo.svg'
 
-const LogoContainer = styled('img', {
+const LogoImg = styled('img', {
   base: {
     mb: 12
   }
@@ -13,7 +13,7 @@ const LogoContainer = styled('img', {
 const Home = () => {
   return (
     <Flex alignItems="center" direction="column" width="100%" gap="12" py="32">
-      <LogoContainer src={Logo} />
+      <LogoImg src={Logo} alt="Logo da Brevly" />
       <CreateLink />
       <LinkList />
     </Flex>
