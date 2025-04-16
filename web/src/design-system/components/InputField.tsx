@@ -31,7 +31,8 @@ const Root = styled(Flex, {
 const Label = styled('label', {
   base: {
     textStyle: 'textXs',
-    color: 'gray500'
+    color: 'gray500',
+    transition: '0.2s ease'
   }
 })
 
@@ -46,22 +47,25 @@ const Input = styled('input', {
     color: 'gray600',
     caretColor: 'blueBase',
 
-    borderColor: 'gray300',
-    borderStyle: 'solid',
-    borderWidth: 1,
+    boxShadow: '0 0 0 1px {colors.gray300}',
+
+    transition: '0.2s ease',
 
     '&::placeholder': {
       color: 'gray400'
     },
 
+    '&::before': {
+      content: 'brev.ly/'
+    },
+
     '&:focus': {
-      borderColor: 'blueBase',
-      borderWidth: 1.5
+      boxShadow: '0 0 0 1.5px {colors.blueBase}',
+      outline: 'none'
     },
 
     '&:invalid': {
-      borderColor: 'danger',
-      borderWidth: 1.5
+      boxShadow: '0 0 0 1.5px {colors.danger}'
     }
   }
 })

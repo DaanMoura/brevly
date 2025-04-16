@@ -14,6 +14,8 @@ const Button = styled('button', {
 
     textStyle: 'textMd',
 
+    cursor: 'pointer',
+
     '&:hover': {
       backgroundColor: 'blueDark'
     },

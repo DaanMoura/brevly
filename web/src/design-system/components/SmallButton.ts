@@ -1,6 +1,6 @@
 import { styled } from '$/jsx'
 
-const IconButton = styled('button', {
+const SmallButton = styled('button', {
   base: {
     display: 'flex',
     height: 32,
@@ -19,8 +19,10 @@ const IconButton = styled('button', {
 
     textStyle: 'textSm',
 
+    cursor: 'pointer',
+
     '&:hover': {
-      backgroundColor: 'blueBase'
+      borderColor: 'blueBase'
     },
 
     '&:disabled': {
@@ -29,10 +31,11 @@ const IconButton = styled('button', {
     },
 
     '& > svg': {
+      fontSize: 16,
       color: 'gray600',
       stroke: 'gray600'
     }
   }
 })
 
-export default IconButton
+export default SmallButton

@@ -34,7 +34,9 @@ export default defineConfig({
       '--global-font-body': '"Open Sans", sans-serif'
     },
     body: {
-      backgroundColor: 'gray200'
+      backgroundColor: 'gray200',
+      width: '100dvw',
+      height: '100dvh'
     }
   }
 })
