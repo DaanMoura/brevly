@@ -18,6 +18,16 @@ const EmptyStateContainer = styled(Flex, {
   }
 })
 
+const LinkListCard = styled(Card, {
+  base: {
+    gap: '20',
+
+    lg: {
+      width: 580
+    }
+  }
+})
+
 const LinkList = () => {
   const links: LinkListItemProps[] = [
     {
@@ -43,7 +53,7 @@ const LinkList = () => {
   ]
 
   return (
-    <Card gap="20">
+    <LinkListCard>
       <Flex alignItems="center" justifyContent="space-between">
         <Text.h1 textStyle="textLg" color="gray600">
           Meus links
@@ -67,7 +77,7 @@ const LinkList = () => {
           </Text.p>
         </EmptyStateContainer>
       )}
-    </Card>
+    </LinkListCard>
   )
 }
 

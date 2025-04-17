@@ -37,6 +37,11 @@ export default defineConfig({
       backgroundColor: 'gray200',
       width: '100dvw',
       height: '100dvh'
+    },
+    'div.root': {
+      display: 'flex',
+      width: '100%',
+      height: '100%'
     }
   }
 })

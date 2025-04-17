@@ -1,13 +1,24 @@
-import { Flex } from '$/jsx'
+import { Flex, styled } from '$/jsx'
 import { Button, Card, InputField, Text } from '@/design-system/components'
 import { useState } from 'react'
+
+const CreateLinkCard = styled(Card, {
+  base: {
+    height: 'fit-content',
+    gap: '24',
+
+    lg: {
+      width: 380
+    }
+  }
+})
 
 const CreateLink = () => {
   const [originalUrl, setOriginalUrl] = useState('')
   const [shortUrl, setShortUrl] = useState('')
 
   return (
-    <Card gap="24">
+    <CreateLinkCard>
       <Text.h1 textStyle="textLg" color="gray600">
         Novo link
       </Text.h1>
@@ -33,7 +44,7 @@ const CreateLink = () => {
         </InputField.Root>
       </Flex>
       <Button>Salvar link</Button>
-    </Card>
+    </CreateLinkCard>
   )
 }
 
