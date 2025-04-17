@@ -11,6 +11,7 @@ const NotFound = () => {
       justifyContent="center"
       width="100%"
       height="100dvh"
+      px="12"
     >
       <Card
         direction="column"

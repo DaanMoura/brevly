@@ -18,6 +18,7 @@ const Redirect = () => {
       justifyContent="center"
       width="100%"
       height="100dvh"
+      px="12"
     >
       <Card
         direction="column"
@@ -29,6 +30,7 @@ const Redirect = () => {
         margin="12"
         padding="20"
         gap="24"
+        textAlign="center"
       >
         <LogoIconImg src={LogoIcon} alt="Ícone da Brevly" />
         <Text.h1 color="gray600" textStyle="textXl">

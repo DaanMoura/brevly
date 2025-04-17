@@ -22,7 +22,7 @@ export const textStyles = defineTextStyles({
       fontFamily: '"Open Sans", sans-serif',
       fontSize: '14px',
       lineHeight: '18px',
-      fontWeight: 'semibold'
+      fontWeight: 600
     }
   },
   textSm: {

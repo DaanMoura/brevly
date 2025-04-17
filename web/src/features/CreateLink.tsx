@@ -4,7 +4,6 @@ import { useState } from 'react'
 
 const CreateLinkCard = styled(Card, {
   base: {
-    height: 'fit-content',
     gap: '24',
 
     lg: {
