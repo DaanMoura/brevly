@@ -14,13 +14,14 @@ const Root = styled(Flex, {
       }
     },
 
-    '&:has(input:invalid)': {
+    '&:has(input:invalid), &:has(input[aria-invalid="true"])': {
       '& label': {
         color: 'danger',
         fontWeight: 'bold'
       },
 
       '& div.error-message': {
+        height: 20,
         visibility: 'visible',
         opacity: 1
       }
@@ -55,16 +56,12 @@ const Input = styled('input', {
       color: 'gray400'
     },
 
-    '&::before': {
-      content: 'brev.ly/'
-    },
-
     '&:focus': {
       boxShadow: '0 0 0 1.5px {colors.blueBase}',
       outline: 'none'
     },
 
-    '&:invalid': {
+    '&:invalid, &[aria-invalid="true"]': {
       boxShadow: '0 0 0 1.5px {colors.danger}'
     }
   }
@@ -77,8 +74,9 @@ const ErrorMessageContainer = styled('div', {
     textStyle: 'textSm',
     color: 'gray500',
 
-    minHeight: 20, // Reserve vertical space
-    visibility: 'hidden',
+    // minHeight: 20,
+    // visibility: 'hidden',
+    height: 0,
     opacity: 0,
     transition: 'opacity 0.2s ease'
   }
