@@ -37,7 +37,14 @@ const Label = styled('label', {
   }
 })
 
-const Input = styled('input', {
+const Prefix = styled('span', {
+  base: {
+    textStyle: 'textMd',
+    color: 'gray400'
+  }
+})
+
+const InputContainer = styled('div', {
   base: {
     display: 'flex',
     alignItems: 'center',
@@ -46,23 +53,32 @@ const Input = styled('input', {
     px: 16,
     textStyle: 'textMd',
     color: 'gray600',
-    caretColor: 'blueBase',
-
     boxShadow: '0 0 0 1px {colors.gray300}',
-
     transition: '0.2s ease',
+
+    '&:has(input:active), &:has(input:focus)': {
+      boxShadow: '0 0 0 1.5px {colors.blueBase}'
+    },
+
+    '&:has(input:invalid), &:has(input[aria-invalid="true"])': {
+      boxShadow: '0 0 0 1.5px {colors.danger}'
+    }
+  }
+})
+
+const Input = styled('input', {
+  base: {
+    width: '100%',
+    textStyle: 'textMd',
+    color: 'gray600',
+    caretColor: 'blueBase',
 
     '&::placeholder': {
       color: 'gray400'
     },
 
     '&:focus': {
-      boxShadow: '0 0 0 1.5px {colors.blueBase}',
       outline: 'none'
-    },
-
-    '&:invalid, &[aria-invalid="true"]': {
-      boxShadow: '0 0 0 1.5px {colors.danger}'
     }
   }
 })
@@ -92,6 +108,8 @@ const ErrorMessage = ({ children }: { children: React.ReactNode }) => (
 const InputField = {
   Root,
   Label,
+  Prefix,
+  InputContainer,
   Input,
   ErrorMessage
 }

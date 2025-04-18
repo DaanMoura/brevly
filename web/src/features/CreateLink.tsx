@@ -63,23 +63,23 @@ const CreateLink = () => {
         <Flex flexDirection="column" gap="16">
           <InputField.Root>
             <InputField.Label>Link original</InputField.Label>
-            <InputField.Input
-              aria-invalid={!!errors.originalUrl}
-              {...register('originalUrl')}
-              id="originalUrl"
-              placeholder="www.exemplo.com.br"
-            />
+            <InputField.InputContainer>
+              <InputField.Input
+                aria-invalid={!!errors.originalUrl}
+                {...register('originalUrl')}
+                id="originalUrl"
+                placeholder="www.exemplo.com.br"
+              />
+            </InputField.InputContainer>
             <InputField.ErrorMessage>{errors.originalUrl?.message}</InputField.ErrorMessage>
           </InputField.Root>
 
           <InputField.Root>
             <InputField.Label>Link encurtado</InputField.Label>
-            <InputField.Input
-              aria-invalid={!!errors.alias}
-              {...register('alias')}
-              id="alias"
-              placeholder="brev.ly/"
-            />
+            <InputField.InputContainer>
+              <InputField.Prefix>brev.ly/</InputField.Prefix>
+              <InputField.Input aria-invalid={!!errors.alias} {...register('alias')} id="alias" />
+            </InputField.InputContainer>
             <InputField.ErrorMessage>{errors.alias?.message}</InputField.ErrorMessage>
           </InputField.Root>
         </Flex>
