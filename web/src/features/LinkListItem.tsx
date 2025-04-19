@@ -15,15 +15,15 @@ const LinkItemContainer = styled(Flex, {
 })
 
 export interface LinkListItemProps {
-  shortUrl: string
+  alias: string
   originalUrl: string
   accessCount: number
 }
 
-const LinkListItem = ({ shortUrl, originalUrl, accessCount }: LinkListItemProps) => {
+const LinkListItem = ({ alias, originalUrl, accessCount }: LinkListItemProps) => {
   const onCopyClick = useCallback(() => {
-    navigator.clipboard.writeText(shortUrl)
-  }, [shortUrl])
+    navigator.clipboard.writeText(alias)
+  }, [alias])
 
   const onDeleteClick = useCallback(() => {
     console.log('TODO: delete link')
@@ -33,7 +33,7 @@ const LinkListItem = ({ shortUrl, originalUrl, accessCount }: LinkListItemProps)
     <LinkItemContainer>
       <Flex direction="column" gap="4">
         <Text.p color="blueBase" textStyle="textMd">
-          {shortUrl}
+          brev.ly/{alias}
         </Text.p>
         <Text.p color="gray500" textStyle="textSm">
           {originalUrl}
