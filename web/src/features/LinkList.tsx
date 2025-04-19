@@ -3,7 +3,7 @@ import { Card, SmallButton, Text } from '@/design-system/components'
 import { DownloadSimple, Link } from '@phosphor-icons/react'
 import LinkListItem, { LinkListItemProps } from './LinkListItem'
 import { colors } from '@/design-system/tokens'
-import { listLinksRequest } from '@/api/list-links'
+import { listLinksRequest } from '@/api'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 

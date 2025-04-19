@@ -13,7 +13,7 @@ import {
   createLinkRoute,
   getLinksRoute,
   getOneLinkRoute,
-  increaseLinkRoute,
+  increaseLinkAccesssRoute,
   deleteLinkRoute,
   exportLinksRoute,
 } from './routes'
@@ -27,6 +27,8 @@ server.setValidatorCompiler(validatorCompiler)
 server.setSerializerCompiler(serializerCompiler)
 
 server.setErrorHandler((error, _, reply) => {
+  console.error(error)
+
   if (hasZodFastifySchemaValidationErrors(error)) {
     return reply.status(400).send({
       message: 'Validation error',
@@ -37,7 +39,10 @@ server.setErrorHandler((error, _, reply) => {
   return reply.status(500).send({ message: 'Internal server error' })
 })
 
-server.register(fastifyCors, { origin: '*' })
+server.register(fastifyCors, {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+})
 
 server.register(fastifySwagger, {
   openapi: {
@@ -56,7 +61,7 @@ server.register(fastifySwaggerUi, {
 server.register(getLinksRoute)
 server.register(createLinkRoute)
 server.register(getOneLinkRoute)
-server.register(increaseLinkRoute)
+server.register(increaseLinkAccesssRoute)
 server.register(deleteLinkRoute)
 server.register(exportLinksRoute)
 

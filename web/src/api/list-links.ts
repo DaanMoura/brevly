@@ -13,6 +13,5 @@ export interface ListLinksResponse {
 
 export const listLinksRequest = async () => {
   const response = await api.get<ListLinksResponse>('links').json()
-  console.log('listLinksRequest', response)
   return response
 }

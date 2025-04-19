@@ -1,7 +1,9 @@
 import { Flex, styled } from '$/jsx'
+import { deleteLinkRequest } from '@/api'
 import { Text } from '@/design-system/components'
 import SmallButton from '@/design-system/components/SmallButton'
 import { Copy, Trash } from '@phosphor-icons/react'
+import { useMutation } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
 const LinkItemContainer = styled(Flex, {
@@ -25,9 +27,13 @@ const LinkListItem = ({ alias, originalUrl, accessCount }: LinkListItemProps) =>
     navigator.clipboard.writeText(alias)
   }, [alias])
 
+  const { mutateAsync: deleteLink } = useMutation({
+    mutationFn: deleteLinkRequest
+  })
+
   const onDeleteClick = useCallback(() => {
-    console.log('TODO: delete link')
-  }, [])
+    deleteLink(alias)
+  }, [alias, deleteLink])
 
   return (
     <LinkItemContainer>

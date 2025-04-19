@@ -4,9 +4,9 @@ import { linkSchema } from '@/shared/schemas/link-model'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
-export const increaseLinkRoute: FastifyPluginAsyncZod = async server => {
+export const increaseLinkAccesssRoute: FastifyPluginAsyncZod = async server => {
   server.put(
-    '/link/:alias/access',
+    '/links/:alias/access',
     {
       schema: {
         summary: 'Increase link access',

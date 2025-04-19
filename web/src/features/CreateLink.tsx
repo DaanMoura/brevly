@@ -44,10 +44,7 @@ const CreateLink = () => {
   } = useForm<CreateLinkForm>({ resolver: zodResolver(createLinkForm) })
 
   const { mutateAsync: createLink } = useMutation({
-    mutationFn: createLinkRequest,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['links'] })
-    }
+    mutationFn: createLinkRequest
   })
 
   const handleCreateLink = async (data: CreateLinkForm) => {

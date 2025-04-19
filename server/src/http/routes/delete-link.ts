@@ -6,7 +6,7 @@ import { z } from 'zod'
 
 export const deleteLinkRoute: FastifyPluginAsyncZod = async server => {
   server.delete(
-    '/link/:alias',
+    '/links/:alias',
     {
       schema: {
         summary: 'Delete link',
@@ -21,6 +21,8 @@ export const deleteLinkRoute: FastifyPluginAsyncZod = async server => {
       },
     },
     async (request, reply) => {
+      console.log('Delete link route called', { request })
+
       const { alias } = request.params
 
       const result = await deleteLink(alias)
