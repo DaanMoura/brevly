@@ -33,6 +33,16 @@ const LinkListCard = styled(Card, {
   }
 })
 
+const LinkListContainer = styled(Flex, {
+  base: {
+    flexDirection: 'column',
+    lg: {
+      maxHeight: 'calc(100dvh - 440px)',
+      overflowY: 'auto'
+    }
+  }
+})
+
 const LinkList = () => {
   const { data } = useQuery({
     queryKey: ['links'],
@@ -78,11 +88,11 @@ const LinkList = () => {
         </SmallButton>
       </Flex>
       {links.length > 0 ? (
-        <Flex direction="column">
+        <LinkListContainer>
           {links.map(link => (
             <LinkListItem key={link.alias} {...link} />
           ))}
-        </Flex>
+        </LinkListContainer>
       ) : (
         <EmptyStateContainer>
           <Link size={32} color={colors.gray400.value} />

@@ -36,13 +36,12 @@ export default defineConfig({
     body: {
       backgroundColor: 'gray200',
       width: '100dvw',
-      height: '100dvh',
-      overflow: 'hidden'
+      height: 'calc(100dvh - 88px)'
     },
     'div.root': {
       display: 'flex',
       width: '100%',
-      height: '100dvh'
+      height: '100%'
     }
   }
 })
