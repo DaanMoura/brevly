@@ -4,8 +4,9 @@ import { DownloadSimple, Link } from '@phosphor-icons/react'
 import LinkListItem, { LinkListItemProps } from './LinkListItem'
 import { colors } from '@/design-system/tokens'
 import { listLinksRequest } from '@/api'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { exportLinksRequest } from '@/api/export-links'
 
 const EmptyStateContainer = styled(Flex, {
   base: {
@@ -41,7 +42,8 @@ const LinkList = () => {
         throw error
       }
       return data
-    }
+    },
+    refetchOnWindowFocus: true
   })
 
   const links: LinkListItemProps[] = useMemo(() => {
@@ -54,13 +56,23 @@ const LinkList = () => {
     )
   }, [data])
 
+  const { mutate: exportLinks } = useMutation({
+    mutationFn: exportLinksRequest,
+    onSuccess: response => {
+      const [_, data] = response
+      if (data) {
+        window.open(data.reportUrl, '_blank')
+      }
+    }
+  })
+
   return (
     <LinkListCard>
       <Flex alignItems="center" justifyContent="space-between">
         <Text.h1 textStyle="textLg" color="gray600">
           Meus links
         </Text.h1>
-        <SmallButton>
+        <SmallButton onClick={() => exportLinks()}>
           <DownloadSimple />
           <span>Baixar CSV</span>
         </SmallButton>

@@ -3,9 +3,10 @@ import { Card, Text } from '@/design-system/components'
 
 import LogoIcon from '@/design-system/assets/Logo_Icon.svg'
 import { useNavigate, useParams } from 'react-router'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { getLinkRequest } from '@/api/get-link'
 import { useMemo } from 'react'
+import { increaseLinkAccessRequest } from '@/api/increase-link-access'
 
 const LogoIconImg = styled('img', {
   base: {
@@ -17,6 +18,10 @@ const LogoIconImg = styled('img', {
 const Redirect = () => {
   const { alias } = useParams()
   const navigate = useNavigate()
+
+  const { mutate: increaseLinkAccess } = useMutation({
+    mutationFn: increaseLinkAccessRequest
+  })
 
   const { data: link } = useQuery({
     queryKey: ['link', alias],
@@ -33,6 +38,7 @@ const Redirect = () => {
         throw error
       }
 
+      increaseLinkAccess(alias)
       window.location.href = data.originalUrl
       return data
     }
