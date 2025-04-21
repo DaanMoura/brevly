@@ -2,6 +2,10 @@ import { Flex, styled } from '$/jsx'
 import { Card, Text } from '@/design-system/components'
 
 import LogoIcon from '@/design-system/assets/Logo_Icon.svg'
+import { useNavigate, useParams } from 'react-router'
+import { useQuery } from '@tanstack/react-query'
+import { getLinkRequest } from '@/api/get-link'
+import { useMemo } from 'react'
 
 const LogoIconImg = styled('img', {
   base: {
@@ -11,6 +15,34 @@ const LogoIconImg = styled('img', {
 })
 
 const Redirect = () => {
+  const { alias } = useParams()
+  const navigate = useNavigate()
+
+  const { data: link } = useQuery({
+    queryKey: ['link', alias],
+    queryFn: async () => {
+      if (!alias) {
+        throw new Error('Link inválido')
+      }
+
+      const [error, data] = await getLinkRequest(alias)
+      if (error) {
+        if (error.statusCode === 404) {
+          navigate(`/${alias}/not-found`)
+        }
+        throw error
+      }
+
+      window.location.href = data.originalUrl
+      return data
+    }
+  })
+
+  const href = useMemo(() => {
+    if (!link) return ''
+    return link.originalUrl
+  }, [link])
+
   return (
     <Flex
       direction="column"
@@ -39,7 +71,10 @@ const Redirect = () => {
         <Flex direction="column" alignItems="center" color="gray500" textStyle="textMd">
           <Text.p>O link será aberto automaticamente em alguns instantes.</Text.p>
           <Text.p>
-            Não foi redirecionado? <Text.a color="blueBase">Acesse aqui</Text.a>
+            Não foi redirecionado?{' '}
+            <Text.a href={href} color="blueBase">
+              Acesse aqui
+            </Text.a>
           </Text.p>
         </Flex>
       </Card>

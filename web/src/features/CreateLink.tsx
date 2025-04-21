@@ -40,6 +40,7 @@ const CreateLink = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting }
   } = useForm<CreateLinkForm>({ resolver: zodResolver(createLinkForm) })
 
@@ -48,9 +49,10 @@ const CreateLink = () => {
   })
 
   const handleCreateLink = async (data: CreateLinkForm) => {
-    try {
-      await createLink(data)
-    } catch (error) {
+    const [error] = await createLink(data)
+    if (error) {
+      setError('originalUrl', { message: 'Erro ao criar link' })
+      setError('alias', { message: 'Erro ao criar link' })
       console.error(error)
     }
   }

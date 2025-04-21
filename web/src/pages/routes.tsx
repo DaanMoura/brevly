@@ -8,7 +8,7 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route index element={<Home />} />
-        <Route path=":shortUrl" element={<Redirect />} />
+        <Route path=":alias" element={<Redirect />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

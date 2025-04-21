@@ -24,7 +24,7 @@ export interface LinkListItemProps {
 
 const LinkListItem = ({ alias, originalUrl, accessCount }: LinkListItemProps) => {
   const onCopyClick = useCallback(() => {
-    navigator.clipboard.writeText(alias)
+    navigator.clipboard.writeText(`localhost:5137/${alias}`)
   }, [alias])
 
   const { mutateAsync: deleteLink } = useMutation({
@@ -38,9 +38,9 @@ const LinkListItem = ({ alias, originalUrl, accessCount }: LinkListItemProps) =>
   return (
     <LinkItemContainer>
       <Flex direction="column" gap="4">
-        <Text.p color="blueBase" textStyle="textMd">
+        <Text.a href={`/${alias}`} textDecoration="none" color="blueBase" textStyle="textMd">
           brev.ly/{alias}
-        </Text.p>
+        </Text.a>
         <Text.p color="gray500" textStyle="textSm">
           {originalUrl}
         </Text.p>

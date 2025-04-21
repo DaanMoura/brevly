@@ -1,5 +1,8 @@
 import { api } from './client'
+import { withErrorGuard } from '@/utils/with-error-guard'
 
-export const deleteLinkRequest = async (linkId: string) => {
-  await api.delete(`links/${linkId}`, { json: {} })
+export const deleteLink = async (linkId: string) => {
+  return await api.delete(`links/${linkId}`, { json: {} }).json()
 }
+
+export const deleteLinkRequest = withErrorGuard(deleteLink)

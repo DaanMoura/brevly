@@ -35,7 +35,13 @@ const LinkListCard = styled(Card, {
 const LinkList = () => {
   const { data } = useQuery({
     queryKey: ['links'],
-    queryFn: listLinksRequest
+    queryFn: async () => {
+      const [error, data] = await listLinksRequest()
+      if (error) {
+        throw error
+      }
+      return data
+    }
   })
 
   const links: LinkListItemProps[] = useMemo(() => {
