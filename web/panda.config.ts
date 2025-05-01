@@ -1,5 +1,5 @@
 import { defineConfig } from '@pandacss/dev'
-import { colors, textStyles } from './src/design-system/tokens'
+import { colors, keyframes, textStyles } from './src/design-system/tokens'
 
 export default defineConfig({
   // Whether to use css reset
@@ -19,7 +19,8 @@ export default defineConfig({
       colors
     },
     extend: {
-      textStyles
+      textStyles,
+      keyframes
     }
   },
 

@@ -3,4 +3,9 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   plugins: [tsconfigPaths()],
+  test: {
+    minWorkers: 1,
+    maxWorkers: 1,
+    fileParallelism: false,
+  },
 })

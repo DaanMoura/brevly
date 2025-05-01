@@ -1,44 +1,59 @@
+import { describe, expect, it, beforeEach } from 'vitest'
 import { db } from '@/db'
 import { schema } from '@/db/schemas'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { makeLink } from '@/test/factories/make-link'
 import { getOneLink } from './get-one-link'
-import { isRight, unwrapEither } from '@/shared/either'
-import { createLink } from './create-link'
+import { isLeft, isRight, unwrapEither } from '@/shared/either'
+import { randomUUID } from 'node:crypto'
 
-describe('get one link', () => {
-  beforeAll(async () => {
+describe.sequential('getOneLink', () => {
+  beforeEach(async () => {
     await db.delete(schema.links)
   })
 
-  afterAll(async () => {
-    await db.delete(schema.links)
+  it('returns left with "Link not found" when link does not exist', async () => {
+    const nonExistentAlias = randomUUID()
+    const result = await getOneLink(nonExistentAlias)
+
+    expect(isLeft(result)).toBe(true)
+    expect(result.left).toBe('Link not found')
   })
 
-  it('should return an error if the alias does not exist', async () => {
-    const result = await getOneLink('example1')
+  it('returns right with link data when link exists', async () => {
+    // Create a test link
+    const testLink = await makeLink()
 
-    expect(isRight(result)).toBe(false)
-  })
-
-  it('should return the link if the alias exists', async () => {
-    const createResult = await createLink({
-      originalUrl: 'https://example.com',
-      alias: 'get-one-1',
-    })
-
-    expect(isRight(createResult)).toBe(true)
-
-    const result = await getOneLink('get-one-1')
+    const result = await getOneLink(testLink.alias)
 
     expect(isRight(result)).toBe(true)
-    if (isRight(createResult) && isRight(result)) {
-      expect(unwrapEither(result)).toEqual({
-        id: unwrapEither(createResult).linkId,
-        originalUrl: 'https://example.com',
-        alias: 'get-one-1',
-        accessCount: 0,
-        createdAt: expect.any(Date),
-      })
-    }
+    const link = unwrapEither(result)
+
+    expect(link).toEqual({
+      id: testLink.id,
+      originalUrl: testLink.originalUrl,
+      alias: testLink.alias,
+      accessCount: testLink.accessCount,
+      createdAt: expect.any(Date),
+    })
+  })
+
+  it('returns the correct link when multiple links exist', async () => {
+    // Create multiple test links
+    await makeLink()
+    const testLink2 = await makeLink()
+    await makeLink()
+
+    const result = await getOneLink(testLink2.alias)
+
+    expect(isRight(result)).toBe(true)
+    const link = unwrapEither(result)
+
+    expect(link).toEqual({
+      id: testLink2.id,
+      originalUrl: testLink2.originalUrl,
+      alias: testLink2.alias,
+      accessCount: testLink2.accessCount,
+      createdAt: expect.any(Date),
+    })
   })
 })

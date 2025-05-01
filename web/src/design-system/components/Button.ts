@@ -11,13 +11,18 @@ const Button = styled('button', {
     backgroundColor: 'blueBase',
     color: 'white',
     borderRadius: 8,
-
     textStyle: 'textMd',
 
     cursor: 'pointer',
 
+    transition: '0.2s',
+
     '&:hover': {
       backgroundColor: 'blueDark'
+    },
+
+    '&:active': {
+      transform: 'scale(0.95)'
     },
 
     '&:disabled': {

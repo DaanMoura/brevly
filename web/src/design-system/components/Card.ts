@@ -8,6 +8,7 @@ const Card = styled(Flex, {
     backgroundColor: 'gray100',
     width: 366,
     height: 'fit-content',
+    overflow: 'hidden',
 
     lg: {
       padding: 32

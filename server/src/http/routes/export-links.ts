@@ -15,8 +15,10 @@ export const exportLinksRoute: FastifyPluginAsyncZod = async server => {
         },
       },
     },
-    async (_, reply) => {
-      const result = await exportLinks()
+    async (request, reply) => {
+      const result = await exportLinks(
+        request.headers.origin ?? 'http://brev.ly'
+      )
 
       const { reportUrl } = unwrapEither(result)
 

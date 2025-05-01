@@ -7,6 +7,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { getLinkRequest } from '@/api/get-link'
 import { useMemo } from 'react'
 import { increaseLinkAccessRequest } from '@/api/increase-link-access'
+import { queryClient } from '@/lib/react-query'
 
 const LogoIconImg = styled('img', {
   base: {
@@ -19,7 +20,7 @@ const Redirect = () => {
   const { alias } = useParams()
   const navigate = useNavigate()
 
-  const { mutate: increaseLinkAccess } = useMutation({
+  const { mutateAsync: increaseLinkAccess } = useMutation({
     mutationFn: increaseLinkAccessRequest
   })
 
@@ -38,7 +39,9 @@ const Redirect = () => {
         throw error
       }
 
-      increaseLinkAccess(alias)
+      await increaseLinkAccess(alias)
+      queryClient.invalidateQueries({ queryKey: ['links'] })
+
       window.location.href = data.originalUrl
       return data
     }

@@ -20,9 +20,14 @@ const SmallButton = styled('button', {
     textStyle: 'textSm',
 
     cursor: 'pointer',
+    transition: '0.2s',
 
     '&:hover': {
       borderColor: 'blueBase'
+    },
+
+    '&:active': {
+      transform: 'scale(0.95)'
     },
 
     '&:disabled': {

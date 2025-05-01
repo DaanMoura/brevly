@@ -7,6 +7,7 @@ import { listLinksRequest } from '@/api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { exportLinksRequest } from '@/api/export-links'
+import LoadingBar from '@/design-system/components/LoadingBar'
 
 const EmptyStateContainer = styled(Flex, {
   base: {
@@ -25,10 +26,22 @@ const EmptyStateContainer = styled(Flex, {
 
 const LinkListCard = styled(Card, {
   base: {
-    gap: '20',
+    padding: 0,
 
     lg: {
-      width: 580
+      width: 580,
+      padding: 0
+    }
+  }
+})
+
+const CardContent = styled(Flex, {
+  base: {
+    flexDirection: 'column',
+    gap: '20',
+    padding: 24,
+    lg: {
+      padding: 32
     }
   }
 })
@@ -44,7 +57,7 @@ const LinkListContainer = styled(Flex, {
 })
 
 const LinkList = () => {
-  const { data } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ['links'],
     queryFn: async () => {
       const [error, data] = await listLinksRequest()
@@ -69,38 +82,64 @@ const LinkList = () => {
   const { mutate: exportLinks } = useMutation({
     mutationFn: exportLinksRequest,
     onSuccess: response => {
-      const [_, data] = response
-      if (data) {
-        window.open(data.reportUrl, '_blank')
+      const [error, data] = response
+      if (error) {
+        throw error
+      }
+      if (data.reportUrl) {
+        fetch(data.reportUrl)
+          .then(response => response.blob())
+          .then(blob => {
+            const url = window.URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.style.display = 'none'
+            a.href = url
+            a.download = 'links.csv'
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
+            window.URL.revokeObjectURL(url)
+          })
       }
     }
   })
 
   return (
     <LinkListCard>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Text.h1 textStyle="textLg" color="gray600">
-          Meus links
-        </Text.h1>
-        <SmallButton onClick={() => exportLinks()}>
-          <DownloadSimple />
-          <span>Baixar CSV</span>
-        </SmallButton>
-      </Flex>
-      {links.length > 0 ? (
-        <LinkListContainer>
-          {links.map(link => (
-            <LinkListItem key={link.alias} {...link} />
-          ))}
-        </LinkListContainer>
-      ) : (
-        <EmptyStateContainer>
-          <Link size={32} color={colors.gray400.value} />
-          <Text.p color="gray500" textStyle="textXs">
-            Ainda não existem links cadastrados
-          </Text.p>
-        </EmptyStateContainer>
-      )}
+      {isPending && <LoadingBar />}
+      <CardContent>
+        <Flex alignItems="center" justifyContent="space-between">
+          <Text.h1 textStyle="textLg" color="gray600">
+            Meus links
+          </Text.h1>
+          <SmallButton onClick={() => exportLinks()}>
+            <DownloadSimple />
+            <span>Baixar CSV</span>
+          </SmallButton>
+        </Flex>
+
+        {links.length > 0 ? (
+          <LinkListContainer>
+            {links.map(link => (
+              <LinkListItem key={link.alias} {...link} />
+            ))}
+          </LinkListContainer>
+        ) : isPending ? (
+          <EmptyStateContainer>
+            <Link size={32} color={colors.gray400.value} />
+            <Text.p color="gray500" textStyle="textXs">
+              Carregando links...
+            </Text.p>
+          </EmptyStateContainer>
+        ) : (
+          <EmptyStateContainer>
+            <Link size={32} color={colors.gray400.value} />
+            <Text.p color="gray500" textStyle="textXs">
+              Ainda não existem links cadastrados
+            </Text.p>
+          </EmptyStateContainer>
+        )}
+      </CardContent>
     </LinkListCard>
   )
 }

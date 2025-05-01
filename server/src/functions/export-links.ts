@@ -10,9 +10,9 @@ type ExportLinksOutput = {
   reportUrl: string
 }
 
-export const exportLinks = async (): Promise<
-  Either<never, ExportLinksOutput>
-> => {
+export const exportLinks = async (
+  origin: string
+): Promise<Either<never, ExportLinksOutput>> => {
   const { sql, params } = db
     .select({
       id: schema.links.id,
@@ -32,7 +32,7 @@ export const exportLinks = async (): Promise<
     columns: [
       { key: 'id', header: 'ID' },
       { key: 'original_url', header: 'Original URL' },
-      { key: 'alias', header: 'Alias' },
+      { key: 'alias', header: 'Short URL' },
       { key: 'access_count', header: 'Access Count' },
       { key: 'created_at', header: 'Created At' },
     ],
@@ -43,10 +43,13 @@ export const exportLinks = async (): Promise<
   const rowTransformer = new Transform({
     objectMode: true, // chunk as object (or array or any primitive type), not Buffer
     transform(chunks: unknown[], _, callback) {
-      for (const chunk of chunks) {
-        console.log({ chunk })
+      for (const chunk of chunks as Record<string, unknown>[]) {
+        const transformedChunk = {
+          ...chunk,
+          alias: `${origin}/${chunk.alias}`,
+        }
         // write one row at the time, instead of all of the cursor at once
-        this.push(chunk)
+        this.push(transformedChunk)
       }
       callback()
     },
