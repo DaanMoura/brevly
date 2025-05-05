@@ -4,7 +4,7 @@ import { Text } from '@/design-system/components'
 import SmallButton from '@/design-system/components/SmallButton'
 import { Copy, Trash } from '@phosphor-icons/react'
 import { useMutation } from '@tanstack/react-query'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 
 const LinkItemContainer = styled(Flex, {
   base: {
@@ -35,6 +35,10 @@ const LinkListItem = ({ alias, originalUrl, accessCount }: LinkListItemProps) =>
     deleteLink(alias)
   }, [alias, deleteLink])
 
+  const accessCountText = useMemo(() => {
+    return `${accessCount} ${accessCount === 1 ? 'acesso' : 'acessos'}`
+  }, [accessCount])
+
   return (
     <LinkItemContainer>
       <Flex direction="column" gap="4">
@@ -47,7 +51,7 @@ const LinkListItem = ({ alias, originalUrl, accessCount }: LinkListItemProps) =>
       </Flex>
       <Flex alignItems="center" ml="auto" gap="20">
         <Text.p color="gray500" textStyle="textSm">
-          {accessCount} acessos
+          {accessCountText}
         </Text.p>
         <Flex alignItems="center" gap="4">
           <SmallButton title="Copiar" onClick={onCopyClick}>
