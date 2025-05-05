@@ -17,7 +17,7 @@ RUN pnpm build
 RUN pnpm prune --prod
 
 # Deploy - define the final image
-FROM cgr.dev/chainguard/node:latest AS deploy
+FROM node:20-alpine3.21 AS deploy
 WORKDIR /usr/src/app
 
 # Non-root user (node)
@@ -29,4 +29,4 @@ COPY --from=build /usr/src/app/package.json ./package.json
 
 EXPOSE 3333
 
-CMD ["dist/server.mjs"]
+CMD ["dist/http/server.mjs"]
