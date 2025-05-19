@@ -1,7 +1,6 @@
 import { Flex, styled } from '$/jsx'
 import { createLinkRequest } from '@/api'
 import { Button, Card, InputField, Text } from '@/design-system/components'
-import { queryClient } from '@/lib/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'

@@ -1,6 +1,6 @@
 import { Flex, styled } from '$/jsx'
 import { Card, SmallButton, Text } from '@/design-system/components'
-import { DownloadSimple, Link } from '@phosphor-icons/react'
+import { DownloadSimple, Link, SpinnerGap } from '@phosphor-icons/react'
 import LinkListItem, { LinkListItemProps } from './LinkListItem'
 import { colors } from '@/design-system/tokens'
 import { listLinksRequest } from '@/api'
@@ -8,6 +8,12 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { exportLinksRequest } from '@/api/export-links'
 import LoadingBar from '@/design-system/components/LoadingBar'
+
+const AnimatedSpinnerGap = styled(SpinnerGap, {
+  base: {
+    animation: 'spin 1s linear infinite'
+  }
+})
 
 const EmptyStateContainer = styled(Flex, {
   base: {
@@ -79,7 +85,7 @@ const LinkList = () => {
     )
   }, [data])
 
-  const { mutate: exportLinks } = useMutation({
+  const { mutate: exportLinks, isPending: isExportPending } = useMutation({
     mutationFn: exportLinksRequest,
     onSuccess: response => {
       const [error, data] = response
@@ -112,8 +118,8 @@ const LinkList = () => {
           <Text.h1 textStyle="textLg" color="gray600">
             Meus links
           </Text.h1>
-          <SmallButton onClick={() => exportLinks()}>
-            <DownloadSimple />
+          <SmallButton disabled={isExportPending} onClick={() => exportLinks()}>
+            {isExportPending ? <AnimatedSpinnerGap /> : <DownloadSimple />}
             <span>Baixar CSV</span>
           </SmallButton>
         </Flex>
