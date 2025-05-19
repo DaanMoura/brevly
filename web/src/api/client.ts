@@ -1,9 +1,8 @@
+import { env } from '@/env'
 import ky from 'ky'
 
-const API_URL = 'http://localhost:3333'
-
 export const api = ky.create({
-  prefixUrl: API_URL,
+  prefixUrl: env.VITE_BACKEND_URL,
   headers: {
     'Content-Type': 'application/json'
   }

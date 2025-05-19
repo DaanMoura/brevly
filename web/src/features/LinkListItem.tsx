@@ -2,6 +2,7 @@ import { Flex, styled } from '$/jsx'
 import { deleteLinkRequest } from '@/api'
 import { Text } from '@/design-system/components'
 import SmallButton from '@/design-system/components/SmallButton'
+import { env } from '@/env'
 import { Copy, Trash } from '@phosphor-icons/react'
 import { useMutation } from '@tanstack/react-query'
 import { useCallback, useMemo } from 'react'
@@ -24,7 +25,7 @@ export interface LinkListItemProps {
 
 const LinkListItem = ({ alias, originalUrl, accessCount }: LinkListItemProps) => {
   const onCopyClick = useCallback(() => {
-    navigator.clipboard.writeText(`localhost:5137/${alias}`)
+    navigator.clipboard.writeText(`${env.VITE_FRONTEND_URL}/${alias}`)
   }, [alias])
 
   const { mutateAsync: deleteLink } = useMutation({
