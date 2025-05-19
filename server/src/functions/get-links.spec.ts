@@ -9,11 +9,9 @@ describe.sequential('getLinks', () => {
   beforeEach(async () => {
     // Clean the entire links table before each test
     await db.delete(schema.links)
-    console.log('Cleaned links table')
   })
 
   it('returns empty array when no links exist', async () => {
-    console.log('Checking for existing links')
     // No need to delete links here since beforeEach already does it
     const result = await getLinks()
 
@@ -21,12 +19,9 @@ describe.sequential('getLinks', () => {
     const { links, total } = unwrapEither(result)
     expect(links).toEqual([])
     expect(total).toBe(0)
-    console.log('get links 1 - done')
   })
 
   it('returns all links when they exist', async () => {
-    console.log('Creating test links and getting them')
-
     // Create test links with a specific pattern we can identify
     const testPrefix = 'test-get-links-'
     const link1 = await makeLink({ alias: `${testPrefix}1` })
@@ -65,6 +60,5 @@ describe.sequential('getLinks', () => {
         }),
       ])
     )
-    console.log('get links 2 - done')
   })
 })

@@ -39,18 +39,10 @@ export const uploadFileToStorage = async (input: UploadFileToStorageInput) => {
     },
   })
 
-  console.log('Uploading file to storage...')
-
-  upload.on('httpUploadProgress', progress => {
-    console.log('Upload progress:', progress)
-  })
-
   await upload.done().catch(error => {
     console.error('Failed to upload file to storage:', error)
     throw error
   })
-
-  console.log('File uploaded to storage')
 
   return {
     key: uniqueFileName,

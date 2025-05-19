@@ -34,7 +34,5 @@ export const createLink = async (
       id: schema.links.id,
     })
 
-  console.log(`Link ${alias} created successfully`)
-
   return makeRight({ linkId: link[0].id })
 }

@@ -30,7 +30,5 @@ export const increaseLinkAccess = async ({
       createdAt: schema.links.createdAt,
     })
 
-  console.log(`Link ${alias} access count incremented successfully`)
-
   return makeRight(link[0])
 }
